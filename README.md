@@ -1,2 +1,2 @@
-# MiMall
-使用Vue全家桶高仿小米商城
+﻿# MiMall
+使用Vue全家桶 小米商城
