@@ -21,10 +21,10 @@ export default {
     }
   },
   mounted(){
-    let url="https://www.imooc.com/activity/servicetime"
-    jsonp(url,(res)=>{
+    let url="/activity/servicetime"
+    jsonp(url,(err,res)=>{
         let result=res;
-        this.data=result
+        this.data=result;
     })
   }
 }
