@@ -24,11 +24,13 @@ export default {
     // storage.clear('a');
     //storage.clear('a','user');
     //1、本地创建json.(本地加载请求静态json文件的形式)
-    this.axios.get('/mock/user/login.json').then((res)=>{
+    // this.axios.get('/mock/user/login.json').then((res)=>{
+    //    this.res=res;
+    // });
+    // 2、easy-mock平台(通过easy-mock平台实现数据mock) 
+    this.axios.get('/user/login').then((res)=>{
        this.res=res;
     });
-  
-  
   }
 }
 </script>
