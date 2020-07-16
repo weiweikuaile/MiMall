@@ -6,7 +6,7 @@
 
 <script>
 //import jsonp from 'jsonp'
-import storage from './storage/index';//可省略/index
+//import storage from './storage/index';//可省略/index
 export default {
   name: 'App',
   components: {
@@ -14,7 +14,7 @@ export default {
   },
   data(){
     return {
-      
+      res:{}
     }
   },
   mounted(){
@@ -22,9 +22,13 @@ export default {
     //storage.setItem('user',{'a':1});//或storage.setItem('user',{a:1});
     //storage.setItem('abc',{a:1},'user');
     // storage.clear('a');
-    storage.clear('a','user');
-
-
+    //storage.clear('a','user');
+    //1、本地创建json.(本地加载请求静态json文件的形式)
+    this.axios.get('/mock/user/login.json').then((res)=>{
+       this.res=res;
+    });
+  
+  
   }
 }
 </script>
