@@ -28,6 +28,10 @@ export default {
     //    this.res=res;
     // });
     // 2、easy-mock平台(通过easy-mock平台实现数据mock) 
+    // this.axios.get('/user/login').then((res)=>{
+    //    this.res=res;
+    // });
+    // 3、本地集成mockjs实现数据mock 
     this.axios.get('/user/login').then((res)=>{
        this.res=res;
     });

@@ -4,10 +4,14 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import App from './App.vue'
 //import env from './env'
+const mock=true;//定义一个mock开关 true是开,false是关.
+if(mock){
+  require('./mock/api');
+}
 //根据前端的跨域方式做调整 暂定是接口代理方式
 //easy-mock官网上的mimall登录接口Base URL地址
-axios.defaults.baseURL='https://www.easy-mock.com/mock/5f1045f8025b1d4dbcfc9d49/mimall';
-//axios.defaults.baseURL='/api';//真实的和后台对接的接口
+//axios.defaults.baseURL='https://www.easy-mock.com/mock/5f1045f8025b1d4dbcfc9d49/mimall';
+axios.defaults.baseURL='/api';//真实的和后台对接的接口
 axios.defaults.timeout=8000;
 //根据环境变量获取不同的请求地址和env.js配套使用
 //axios.defaults.baseURL=env.baseURL;
