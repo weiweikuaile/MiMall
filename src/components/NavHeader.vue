@@ -15,19 +15,42 @@
                 </div>
             </div>
         </div>
-        <div class="nav-header"></div>
+        <div class="nav-header">
+            <div class="container">
+                <div class="header-logo">
+                    <a href="./#/index"></a>
+                </div>
+                <div class="header-menu">
+                    <div class="item-menu">
+                        <span>小米手机</span>
+                        <div class="children"></div>
+                    </div>
+                    <div class="item-menu">
+                        <span>Redmi红米</span>
+                        <div class="children"></div>
+                    </div>
+                    <div class="item-menu">
+                        <span>电视</span>
+                        <div class="children"></div>
+                    </div> 
+                </div>
+                <div class="header-search">
+                    <input type="text" name="" id="" value=""/>
+                    <button>搜索</button>
+                </div>
+            </div>
+        </div>
     </div>
     
 </template> 
 <script>
     export default{
         name:'nav-header'
-
     }
 </script> 
 <style lang="scss">
+@import './../assets/scss/base.scss';
     .header{
-
        .nav-topbar{
          height:39px;
          line-height: 39px;
@@ -35,9 +58,6 @@
          color:#B0B0B0;
          font-size:12px;
          .container{
-            width:1266px;
-            margin-right: auto;
-            margin-left:auto;
             display:flex;
             justify-content:space-between;
             align-items:center;
@@ -64,7 +84,62 @@
              
          }  
        }
-       
+       .nav-header{
+         .container{
+             height:112px;
+             display:flex;
+             justify-content:space-between;
+             align-items:center;
+             .header-logo{
+                 display:inline-block;
+                 width:55px;
+                 height:55px;
+                 background-color:#FF6600;
+                 a{
+                     display:inline-block;
+                     width:110px;
+                     heigth:55px;
+                     &:before{
+                         content:' ';
+                         display:inline-block;
+                         width:55px;
+                         height:55px;
+                         background:url('/imgs/mi-logo.png') no-repeat center;
+                         background-size:55px; 
+                         transition:margin .2s;
+                     }
+                     &:after{
+                         content:' ';
+                         display:inline-block;
+                         width:55px;
+                         height:55px;
+                         background:url('/imgs/mi-home.png') no-repeat center;
+                         background-size:55px; 
+                     }
+                     &:hover:before{
+                         margin-left:-55px;
+                         transition:margin .2s;
+                     }
+                 }
+             }
+             .header-menu{
+                 display:inline-block;
+                 width:200px;
+                 padding-left:209px;
+                 .item-menu{
+                    display:inline-block;
+                    color:#333333;
+                    font-weight:bold;
+                    font-size:16px;
+                    line-height:112px;
+                    // margin-left:20px;
+                    span{
+                      cursor:pointer;
+                    }
+                 }
+             }
+         }
+       }
        
     }
 </style>   
