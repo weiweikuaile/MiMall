@@ -98,7 +98,7 @@
                  a{
                      display:inline-block;
                      width:110px;
-                     heigth:55px;
+                     height:55px;
                      &:before{
                          content:' ';
                          display:inline-block;
