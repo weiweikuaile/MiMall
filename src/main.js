@@ -3,8 +3,8 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import App from './App.vue'
-import VueAwesomeSwiper from 'vue-awesome-swiper';
-Vue.use(VueAwesomeSwiper);
+// import VueAwesomeSwiper from 'vue-awesome-swiper';
+// Vue.use(VueAwesomeSwiper);
 //import env from './env'
 const mock=true;//定义一个mock开关 true是开,false是关.
 if(mock){
