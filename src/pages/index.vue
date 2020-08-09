@@ -78,16 +78,16 @@
                         <a href="/#/product/35"><img src="/imgs/mix-alpha.jpg" alt=""></a>
                     </div>
                     <div class="list-box">
-                        <div class="list" v-for="(item,index) in phoneList" :key="index">
-                            <div class="item" v-for="(sub,j) in item" :key="j">
-                                <span>新品</span>
+                        <div class="list" v-for="(arr,i) in phoneList" :key="i">
+                            <div class="item" v-for="(subitem,j) in arr" :key="j">
+                                <span :class="{'new-pro':j%2==0}">新品</span>
                                 <div class="item-img">
-                                    <img src="/imgs/item-box-3.jpg" alt="">
+                                    <img :src="subitem.mainImage" alt="">
                                 </div>
                                 <div class="item-info">
-                                    <h3>小米9</h3>
-                                    <p>骁龙855,索尼4800万超广角微距</p>
-                                    <p class="price">2999元</p>
+                                    <h3>{{subitem.name}}</h3>
+                                    <p>{{subitem.subtitle}}</p>
+                                    <p class="price">{{subitem.price}}元</p>
                                 </div>
                             </div> 
                         </div>       
@@ -210,19 +210,19 @@ export default{
     mounted(){
         //console.log('this is current swiper instance object',this.swiper);
         //this.swiper.slideTo(2, 1000, true);//跳到指定图片开始轮播
-        //this.init();//初始化商品 加载商品列表
+        this.init();//初始化商品 加载商品列表
     },
     methods:{
-        // init(){
-        //    this.axios.get('/products',{
-        //        params:{
-        //            categoryId:100012,
-        //            pageSize:8
-        //        }
-        //    }).then((res)=>{
-
-        //    })
-        // }
+        init(){
+           this.axios.get('/products',{
+               params:{
+                   categoryId:100012,
+                   pageSize:8
+               }
+           }).then((res)=>{
+               this.phoneList=[res.list.slice(0,4),res.list.slice(4,8)];//2维数组,每个数组有4个元素
+           })
+        }
     },
     computed:{
         swiper(){
@@ -392,6 +392,7 @@ export default{
                         .item-img{
                             img{
                                 height:195px;
+                                width: 100%;
                             }
                         }//item-img
                         .item-info{
