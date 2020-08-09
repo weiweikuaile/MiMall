@@ -83,24 +83,34 @@
                                 <span :class="{'new-pro':j%2==0}">新品</span>
                                 <div class="item-img">
                                     <img :src="subitem.mainImage" alt="">
-                                </div>
+                                </div><!--item-img-->
                                 <div class="item-info">
                                     <h3>{{subitem.name}}</h3>
                                     <p>{{subitem.subtitle}}</p>
                                     <p class="price">{{subitem.price}}元</p>
-                                </div>
-                            </div> 
-                        </div>       
-                    </div>
+                                </div><!--item-info-->
+                            </div><!--item-->  
+                        </div><!--list-->       
+                    </div><!--list-box-->
                 </div><!--wrapper-->
             </div> <!--product-box的container  -->
         </div><!--product-box  -->
         <Service-bar></Service-bar>
+        <Modal 
+           title="提示" 
+           sureText="查看购物车" 
+           btnType="1" 
+           modalType="middle" :showModal="true">
+           <template v-slot:body>
+               <p>商品添加成功！</p>
+           </template>
+        </Modal>
     </div><!--index  -->
 </template> 
 <script>
 
 import ServiceBar from './../components/ServiceBar';
+import Modal from './../components/Modal';
 //import { swiper, swiperSlide} from 'vue-awesome-swiper'
 //import { Swiper, SwiperSlide} from 'vue-awesome-swiper';
 //import 'swiper/css/swiper.css'//
@@ -119,7 +129,8 @@ export default{
     components:{
       swiper,
       swiperSlide,  
-      ServiceBar
+      ServiceBar,
+      Modal
     },
     
     data() {
@@ -217,9 +228,10 @@ export default{
            this.axios.get('/products',{
                params:{
                    categoryId:100012,
-                   pageSize:8
+                   pageSize:14
                }
-           }).then((res)=>{
+           }).then((res)=>{//前6条信息是给导航菜单航手机图的（因为尺寸适合导航菜单menuList手机小图,不适合商品phoneList手机大图）
+               res.list=res.list.slice(6,14);
                this.phoneList=[res.list.slice(0,4),res.list.slice(4,8)];//2维数组,每个数组有4个元素
            })
         }
