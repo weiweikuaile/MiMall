@@ -87,7 +87,7 @@
                                 <div class="item-info">
                                     <h3>{{subitem.name}}</h3>
                                     <p>{{subitem.subtitle}}</p>
-                                    <p class="price">{{subitem.price}}元</p>
+                                    <p class="price" @click="addCart(subitem.id)">{{subitem.price}}元</p>
                                 </div><!--item-info-->
                             </div><!--item-->  
                         </div><!--list-->       
@@ -100,7 +100,11 @@
            title="提示" 
            sureText="查看购物车" 
            btnType="1" 
-           modalType="middle" :showModal="true">
+           modalType="middle" 
+           :showModal="showModal"
+           v-on:submit="goToCart"
+           v-on:cancel="showModal=false"
+           >
            <template v-slot:body>
                <p>商品添加成功！</p>
            </template>
@@ -215,7 +219,8 @@ export default{
            ],
            phoneList:[
                [1,1,1,1],[1,1,1,1]
-           ] 
+           ],
+           showModal:false 
         }//return
     },//data
     mounted(){
@@ -234,6 +239,23 @@ export default{
                res.list=res.list.slice(6,14);
                this.phoneList=[res.list.slice(0,4),res.list.slice(4,8)];//2维数组,每个数组有4个元素
            })
+        },
+        addCart(){
+            this.showModal=true;
+            
+            /*
+            //登录完善后再放开如下代码,否则总提示登录
+            this.axios.post('/carts',{
+                productId:id,
+                selected:true
+            }).then(()=>{
+
+            }).catch(()=>{
+                this.showModal=true;
+            })*/
+        },
+        goToCart(){
+            this.$router.push('/cart');
         }
     },
     computed:{
