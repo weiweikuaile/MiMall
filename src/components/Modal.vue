@@ -6,18 +6,18 @@
             </div>
             <div class="modal-dialog">
                 <div class="modal-header">
-                    <span>标题</span>
+                    <span>{{title}}</span>
                     <a href="javascript:;" class="icon-close" v-on:click="$emit('cancel')"></a>
                 </div>
                 <div class="modal-body">
                     <slot name="body"></slot>
                 </div>
                 <div class="modal-footer">
-                    <a href="javascript:;" class="btn" v-if="btnType==1" v-on:click="$emit('submit')">确定</a>
-                    <a href="javascript:;" class="btn" v-if="btnType==2" v-on:click="$emit('cancel')">取消</a>
+                    <a href="javascript:;" class="btn" v-if="btnType==1" v-on:click="$emit('submit')">{{sureText}}</a>
+                    <a href="javascript:;" class="btn" v-if="btnType==2" v-on:click="$emit('cancel')">{{cancelText}}</a>
                     <div class="btn-group" v-if="btnType==3" v-else>
-                        <a href="javascript:;" v-on:click="$emit('submit')" class="btn">确定</a>
-                        <a href="javascript:;" v-on:click="$emit('cancel')" class="btn">取消</a>
+                        <a href="javascript:;" v-on:click="$emit('submit')" class="btn">{{sureText}}</a>
+                        <a href="javascript:;" v-on:click="$emit('cancel')" class="btn">{{cancelText}}</a>
                     </div>                
                 </div>
             </div>
