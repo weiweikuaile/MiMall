@@ -61,12 +61,12 @@
             </div>
             <div class="ads-box">
                 <a :href="'/#/product/'+item.id" v-for="(item,index) in adsList" :key="index">
-                    <img :src="item.img" alt="">
+                    <img v-lazy="item.img" alt="">
                 </a> 
             </div>
             <div class="banner">
                 <a href="/#/product/38" >
-                    <img src="/imgs/banner-1.png" alt="">
+                    <img v-lazy="'/imgs/banner-1.png'" alt="">
                 </a>
             </div>
         </div><!--index的container  -->
@@ -75,14 +75,14 @@
                 <h2>手机</h2>
                 <div class="wrapper">
                     <div class="banner-left">
-                        <a href="/#/product/35"><img src="/imgs/mix-alpha.jpg" alt=""></a>
+                        <a href="/#/product/35"><img v-lazy="'/imgs/mix-alpha.jpg'" alt=""></a>
                     </div>
                     <div class="list-box">
                         <div class="list" v-for="(arr,i) in phoneList" :key="i">
                             <div class="item" v-for="(subitem,j) in arr" :key="j">
                                 <span :class="{'new-pro':j%2==0}">新品</span>
                                 <div class="item-img">
-                                    <img :src="subitem.mainImage" alt="">
+                                    <img v-lazy="subitem.mainImage" alt="">
                                 </div><!--item-img-->
                                 <div class="item-info">
                                     <h3>{{subitem.name}}</h3>
@@ -93,7 +93,7 @@
                         </div><!--list-->       
                     </div><!--list-box-->
                 </div><!--wrapper-->
-            </div> <!--product-box的container  -->
+            </div> <!--product-box里的container  -->
         </div><!--product-box  -->
         <Service-bar></Service-bar>
         <Modal 
@@ -445,9 +445,6 @@ export default{
                             .price{
                                   color:#F20A0A;
                                   font-size:$fontJ;
-                                  //line-height:$fontJ;//
-                                  //width:50px;//
-                                  //height:13px;//
                                   font-weight:bold;
                                   cursor:pointer;
                                   &:after{
