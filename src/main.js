@@ -3,6 +3,7 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueLazyLoad from 'vue-lazyload'
+import VueCookie from 'vue-cookie'
 import App from './App.vue'
 // import VueAwesomeSwiper from 'vue-awesome-swiper';
 // Vue.use(VueAwesomeSwiper);
@@ -27,9 +28,11 @@ axios.interceptors.response.use(function(response){
     window.location.href='/#/login';
   }else{
     alert(res.msg);//ElementUI的主键方式message弹窗错误消息
+    return Promise.reject(res);
   }
 });
 Vue.use(VueAxios,axios);
+Vue.use(VueCookie);
 Vue.use(VueLazyLoad,{
   loading:'/imgs/loading-svg/loading-bars.svg'
 })
