@@ -45,31 +45,36 @@
                 username:'',
                 password:'',
                 userId:'',
-                //res:{}
+                res:{}//
             }
         },//data
         //...mapActions(['saveUserName']),
         methods:{
             login(){//登录方法
-                let {username,password}=this;
+                let {username,password}=this;//data里的
                 //调接口
-                this.axios.post('/user/login',{
-                    username,
-                    password
+                this.axios.post('/user/login',{//v-model冒号后的值:data里的
+                    username:username,
+                    password:password
                 }).then((res)=>{
-                    //this.res=res;
-                    this.$cookie.set('userId',res.id,{expires:'1M'});
+                    this.res=res;//
+                    console.log(res);
+                    console.log(res.id);
+                    console.log(res.username);
+                    this.$cookie.set('userId',res.id,{expires:'30S'});//生效
+                    // this.$cookie.set('username',res.username,{expires:'1M'});
+                    // this.$cookie.set('password',res.password,{expires:'1M'});
                     //to-do保存用户名
-                    this.$router.push('/index');
+                    this.$router.push('/index');//跳转到首页
                 })
             },//login
             register(){//注册方法
                 
                 //调接口
                 this.axios.post('/user/register',{
-                    username:'admin1',
-                    password:'admin1',
-                    email:'admin1@163.com'
+                    username:'weiwork0001',
+                    password:'weiwork0001',
+                    email:'weiwork0001@163.com'
                 }).then((res)=>{
                     alert('注册成功');
                 })
