@@ -25,7 +25,7 @@ export default {
 //拉取用户信息
     getUser(){
       this.axios.get('/user').then(()=>{
-        //to-do 保存到vuex里面
+        //to-do 保存到vuex里面 
 
       })
     },
