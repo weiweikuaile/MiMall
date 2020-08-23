@@ -54,20 +54,23 @@
                 let {username,password}=this;//data里的
                 //调接口
                 this.axios.post('/user/login',{//v-model冒号后的值:data里的
-                    username:username,
-                    password:password
+                    username,
+                    password
                 }).then((res)=>{
-                    this.res=res;//
-                    console.log(res);
-                    console.log(res.id);
-                    console.log(res.username);
-                    this.$cookie.set('userId',res.id,{expires:'30S'});//生效
+                    //this.res=res;//
+                    // console.log(res);
+                    // console.log(res.id);
+                    // console.log(res.username);
+                    this.$cookie.set('userId',res.id,{expires:'1M'});//生效 1M代表1个月
                     // this.$cookie.set('username',res.username,{expires:'1M'});
                     // this.$cookie.set('password',res.password,{expires:'1M'});
                     //to-do保存用户名
+                    //this.$store.dispatch('saveUserName',res.username);//换下一行代码
+                    this.saveUserName(res.username);
                     this.$router.push('/index');//跳转到首页
                 })
             },//login
+            ...mapActions(['saveUserName']),
             register(){//注册方法
                 
                 //调接口
