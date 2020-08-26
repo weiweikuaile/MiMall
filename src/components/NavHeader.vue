@@ -118,23 +118,23 @@
     
 </template> 
 <script>
-import {mapState} from 'vuex';
+import {mapState} from 'vuex';//[mapState辅助函数用法]
     export default{
         name:'nav-header',
         data(){
             return{
-                // username:this.$store.state.username,
+                //username:this.$store.state.username,
                 phoneList:[]
             }
         },
         computed:{
-            /*username(){
+            username(){
               return this.$store.state.username;
             },
             cartCount(){
               return this.$store.state.cartCount; 
-            }*/
-            ...mapState(['username','cartCount'])
+            }/*注销掉username()和cartCount()这两个方法才能使用mapState辅助函数*/
+            //...mapState(['username','cartCount'])//[mapState辅助函数用法]
         },
         filters:{
           currency(val){

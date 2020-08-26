@@ -37,7 +37,7 @@
   </div>
 </template>
 <script>
-    import {mapActions} from 'vuex';
+    import {mapActions} from 'vuex';//[mapActions辅助函数用法]
     export default{
         name:'login',
         data(){
@@ -48,7 +48,7 @@
                 res:{}//
             }
         },//data
-        //...mapActions(['saveUserName']),
+        
         methods:{
             login(){//登录方法
                 let {username,password}=this;//data里的
@@ -65,12 +65,12 @@
                     // this.$cookie.set('username',res.username,{expires:'1M'});
                     // this.$cookie.set('password',res.password,{expires:'1M'});
                     //to-do保存用户名
-                    //this.$store.dispatch('saveUserName',res.username);//换下一行代码
-                    this.saveUserName(res.username);
+                    this.$store.dispatch('saveUserName',res.username);//换成下一行代码[map]
+                    //this.saveUserName(res.username);//[map]
                     this.$router.push('/index');//跳转到首页
                 })
             },//login
-            ...mapActions(['saveUserName']),
+            //...mapActions(['saveUserName']),//[mapActions辅助函数用法]
             register(){//注册方法
                 
                 //调接口
