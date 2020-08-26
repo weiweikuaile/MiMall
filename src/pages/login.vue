@@ -65,7 +65,7 @@
                     // this.$cookie.set('username',res.username,{expires:'1M'});
                     // this.$cookie.set('password',res.password,{expires:'1M'});
                     //to-do保存用户名
-                    this.$store.dispatch('saveUserName',res.username);//换成下一行代码[map]
+                    this.$store.dispatch('saveUserName',res.username);//换成下一行代码[mapActions辅助函数用法]
                     //this.saveUserName(res.username);//[map]
                     this.$router.push('/index');//跳转到首页
                 })
