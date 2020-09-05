@@ -47,7 +47,7 @@
             <div class="video" v-bind:class="showSlide">
             <!--<div class="video" v-bind:class="{'slide':showSlide}">-->
               <!-- <span class="icon-close" @click="closeVideo"></span> -->
-              <span class="icon-close" @click="showSlide=slideUp"></span>
+              <span class="icon-close" @click="showSlide='slideUp'"></span>
               <video src="/imgs/product/video.mp4" muted autoplay controls="controls"></video>
             </div><!--video-->
           </div><!-- video-box -->
@@ -216,7 +216,7 @@
               top:50%;
           }
           &.slideUp{
-              animation:slideUp .6s linear; 
+              animation:slideUp .6s linear;
           } 
           .icon-close{
             position:absolute;
