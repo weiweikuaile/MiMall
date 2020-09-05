@@ -39,15 +39,15 @@
       <div class="item-video">
           <h2>60帧超慢动作摄影<br/>慢慢回味每一瞬间的精彩</h2>
           <p>后置960帧电影般超慢动作视频，将眨眼间的美妙展现得淋漓尽致！<br/>更能AI 精准分析视频内容，15个场景智能匹配背景音效。</p>
-          <!-- <div class="video-bg" @click="showSlide='slideDown'"></div> -->
-          <div class="video-bg" @click="showSlide=true"></div>
+          <div class="video-bg" @click="showSlide='slideDown'"></div>
+          <!-- <div class="video-bg" @click="showSlide=true"></div> -->
           <!-- <div class="video-box" v-show="showSlide"> -->
           <div class="video-box">
-            <div class="overlay" v-if="showSlide"></div><!--视频遮罩-->
-            <!--<div class="video" v-bind:class="showSlide">-->
-            <div class="video" v-bind:class="{'slide':showSlide}">
+            <div class="overlay" v-if="showSlide=='slideDown'"></div><!--视频遮罩-->
+            <div class="video" v-bind:class="showSlide">
+            <!--<div class="video" v-bind:class="{'slide':showSlide}">-->
               <!-- <span class="icon-close" @click="closeVideo"></span> -->
-              <span class="icon-close" @click="showSlide=false"></span>
+              <span class="icon-close" @click="showSlide=slideUp"></span>
               <video src="/imgs/product/video.mp4" muted autoplay controls="controls"></video>
             </div><!--video-->
           </div><!-- video-box -->
@@ -67,8 +67,8 @@
 	},
 	data(){
 	  return {
-      //showSlide:'',//控制动画效果
-      showSlide:false,
+      showSlide:'',//控制动画效果
+      //showSlide:false,
 	    product:{},//商品信息
 	    swiperOption:{
 	      autoplay:true,
@@ -179,49 +179,45 @@
             opacity: .4;
             z-index: 10;
         }
-      //   @keyframes slideDown{
-      //    from{
-      //      top:-50%;
-      //      opacity:0;
-      //    }
-      //    to{
-      //       top:50%;
-      //       opacity:1;
-      //    }
-      //   }
-      //   @keyframes slideUp{
-      //    from{
-      //       top:50%;
-      //       opacity:1;
-      //    }
-      //    to{
-      //       top:-50%;
-      //       opacity:0;
-      //    }
-      //   }
+         @keyframes slideDown{//下拉效果
+         from{
+           top:-50%;
+           opacity:0;
+         }
+         to{
+            top:50%;
+            opacity:1;
+         }
+         }
+         @keyframes slideUp{//上拉效果
+         from{
+            top:50%;
+            opacity:1;
+         }
+         to{
+            top:-50%;
+            opacity:0;
+         }
+         }
          .video{
           position: fixed;
           top: -50%;//弹窗先消失,点击播放才出现
-      //    top: 50%;
+      //    top: 50%;//调样式时用
           left: 50%;
           transform: translate(-50%,-50%);
           z-index: 10;
           width: 1000px;
           height: 536px;
-          opacity:0;
-          transition:all .6s;//过渡效果
-          &.slide{
-            top: 50%;
-            opacity:1;
+      //    opacity:0;
+          
+          opacity: 1;
+          &.slideDown{
+              animation:slideDown .6s linear;
+              top:50%;
           }
-      //    opacity: 1;
-      //    &.slideDown{
-      //        animation:slideDown .6s linear;
-      //        top:50%;
-      //    }
-      //    &.slideUp{
-      //        animation:slideUp .6s linear; 
-      //    } 
+          &.slideUp{
+              animation:slideUp .6s linear; 
+          } 
           .icon-close{
             position:absolute;
             top:20px;
