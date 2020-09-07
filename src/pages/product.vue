@@ -1,14 +1,14 @@
 <template>  
   <div class="product">
-    <product-param  title="小米9">
+    <product-param  v-bind:title="product.name">
         <template v-slot:buy>
-            <button class="btn">立即购买</button>
+            <button class="btn" @click="buy">立即购买</button>
         </template>
     </product-param>
     <div class="content">
       <div class="item-bg">
-        <h2>小米9</h2>
-        <h3>小米9 战斗天使</h3>
+        <h2>{{product.name}}</h2>
+        <h3>{{product.subtitle}}</h3>
         <p>
           <a href="" id="">全球首款双频 GP</a>
           <span>|</span>
@@ -19,7 +19,7 @@
           <a href="" id="">红外人脸识别</a>
         </p>
         <div class="price">
-          <span>￥<em>2599</em></span>
+          <span>￥<em>{{product.price}}</em></span>
         </div>
       </div><!--item-bg-->
       <div class="item-bg-2"></div>
@@ -81,8 +81,22 @@
 	      }
 	    }
 	  }
-	},
+  },
+  mounted(){//初始化数据
+    this.getProductInfo();
+  },
 	methods:{
+    getProductInfo(){
+      //获取浏览器商品地址栏id
+      let id=this.$route.params.id;//路由参数 没有r 有r的是路由跳转 
+      this.axios.get(`/products/${id}`).then((res)=>{
+        this.product=res;
+      })
+    },
+    buy(){
+      let id=this.$route.params.id;//路由参数
+      this.$router.push(`/detail/${id}`);//动态
+    },
 	  closeVideo(){
 	    this.showSlide='slideUp';
 	    setTimeout(()=>{
