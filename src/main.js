@@ -27,10 +27,10 @@ axios.interceptors.response.use(function(response){
   if(res.status==0){
     return res.data;
   }else if(res.status==10){
-    if(path!='#/index'){
-      window.location.href='/#/login';//后续会将涉及到用户个人信息等的页面做拦截，
-    }
-    
+    // if(path!='#/index'){
+    //   window.location.href='/#/login';//后续会将涉及到用户个人信息等的页面做拦截，  
+    // }
+    //return Promise.reject(res);//如果有错误就是失败抛出异常 status非0的都要失败 detail.vue里测试 
   }else{
     alert(res.msg);//ElementUI的主键方式message弹窗错误消息
     return Promise.reject(res);

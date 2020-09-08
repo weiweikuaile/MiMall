@@ -240,19 +240,20 @@ export default{
                this.phoneList=[res.list.slice(0,4),res.list.slice(4,8)];//2维数组,每个数组有4个元素
            })
         },
-        addCart(){
-            this.showModal=true;
+        addCart(id){//新加
+            //this.showModal=true;//新减
             
-            /*
+            /**/
             //登录完善后再放开如下代码,否则总提示登录
             this.axios.post('/carts',{
                 productId:id,
                 selected:true
-            }).then(()=>{
-
+            }).then((res)=>{
+                this.showModal=true;//新加
+                this.$store.dispatch('saveCartCount',res.cartTotalQuantity);//新加
             }).catch(()=>{
                 this.showModal=true;
-            })*/
+            });
         },
         goToCart(){
             this.$router.push('/cart');
