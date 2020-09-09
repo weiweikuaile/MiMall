@@ -69,7 +69,7 @@ import ServiceBar from './../components/ServiceBar';
         data(){
           return {
             id:this.$route.params.id,//获取商品ID
-            error:'',//新加
+            error:'',//错误消息拦截测试,呼应main.js
             version:1,//商品版本切换
             product:{},//商品信息
             swiperOption:{

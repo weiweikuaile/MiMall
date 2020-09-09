@@ -207,30 +207,7 @@ import {mapState} from 'vuex';//[mapState辅助函数用法]
              position:relative;
              height:112px;
              @include flex();
-             .header-logo{
-                 display:inline-block;
-                 width:55px;
-                 height:55px;
-                 background-color:#FF6600;
-                 a{
-                     display:inline-block;
-                     width:110px;
-                     height:55px;
-                     &:before{
-                         content:' ';
-                         @include bgImg(55px,55px,'/imgs/mi-logo.png',55px);
-                         transition:margin .2s;
-                     }//before
-                     &:after{
-                         content:' ';
-                         @include bgImg(55px,55px,'/imgs/mi-home.png',55px);
-                     }//after
-                     &:hover:before{
-                         margin-left:-55px;
-                         transition:margin .2s;
-                     }//hoberbefore
-                    }//a
-                }//header-logo
+             //公共logo在base.scss里
             
              .header-menu{
                  display:inline-block;
