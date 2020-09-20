@@ -22,7 +22,7 @@ axios.defaults.timeout=8000;
 //axios.defaults.baseURL=env.baseURL;
 //接口错误拦截
 axios.interceptors.response.use(function(response){
-  let res=response.data;console.log(res);
+  let res=response.data;console.log('--我在main.js里打印不同接口时axios的返回值里data的值 如下');console.log(res);
   let path=location.hash;
   if(res.status==0){
     return res.data;

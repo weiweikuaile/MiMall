@@ -8,18 +8,24 @@
                 <h2>{{title}}<slot name="tip"></slot></h2>
             </div>
             <div class="username">
-                <a href="javascript:;">Jack</a>
+                <a href="javascript:;">用户名Jack</a>
+                <!-- login.vue页面解决 无法登录后返回用户输入的用户名和密码bug后恢复下面代码 -->
+                <!-- <a href="javascript:;">{{username}}</a> -->
+                
             </div>    
         </div>
     </div>
 </template> 
 <script>
+    import {mapState} from 'vuex';//[mapState辅助函数用法]
     export default{
         name:'order-header',
         props:{
           title:String
         },
-        
+        computed:{
+            ...mapState(['username'])
+        },
     }
 </script>
 <style lang="scss">

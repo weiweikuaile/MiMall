@@ -61,13 +61,20 @@
                     // console.log(res);
                     // console.log(res.id);
                     // console.log(res.username);
-                    this.$cookie.set('userId',res.id,{expires:'1M'});//生效 1M代表1个月
+                    this.$cookie.set('userId',res.id,{expires:'Session'});
+		    //this.$cookie.set('userId',res.id,{expires:'1M'});//生效 1M代表1个月
                     // this.$cookie.set('username',res.username,{expires:'1M'});
                     // this.$cookie.set('password',res.password,{expires:'1M'});
                     //to-do保存用户名
                     this.$store.dispatch('saveUserName',res.username);//换成下一行代码[mapActions辅助函数用法]
                     //this.saveUserName(res.username);//[mapActions辅助函数用法]
-                    this.$router.push('/index');//跳转到首页
+                    //this.$router.push('/index');//跳转到首页
+		    this.$router.push({
+		    	name:'index',
+			params:{
+			  from:'login'
+			}
+		    });
                 })
             },//login
             //...mapActions(['saveUserName']),//[mapActions辅助函数用法]
