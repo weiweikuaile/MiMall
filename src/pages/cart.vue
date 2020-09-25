@@ -20,7 +20,7 @@
                 <li class="cart-item" v-for="(item,index) in list" v-bind:key="index">
                   <div class="item-check">
                     <!-- <span class="checkbox" v-bind:class="{'checked':}"></span> -->
-                    <span class="checkbox" v-bind:class="{'checked':item.productSelected}" @click="updateCart(item)"></span>
+                    <span class="checkbox" v-bind:class="{'checked':item.productSelected}" @click="supdateCart(item)"></span>
                   </div>
                   <div class="item-name">
                     <img v-lazy="item.productMainImage" alt="">
@@ -83,24 +83,65 @@
           // 获取购物车列表
           getCartList(){
             this.axios.get('/carts').then((res)=>{
-              console.log('开始cart.vue页面打印的');
-              console.log(res);
-              console.log('结束cart.vue页面打印的');
+              // console.log('开始cart.vue页面打印的');
+              // console.log(res);
+              // console.log('结束cart.vue页面打印的');
               //this.list=res.cartProductVoList || [];
               //this.allChecked=res.selectedAll;//是否全选
               //this.cartTotalPrice=res.cartTotalPrice;//商品总金额
               //this.checkedNum=res.cartTotalQuantity;//选中商品数量
               this.renderData(res);//公共赋值
-            console.log(this.list);
-            console.log(this.allChecked);
-            console.log(this.cartTotalPrice);
+            // console.log(this.list);
+            // console.log(this.allChecked);
+            // console.log(this.cartTotalPrice);
             //console.log(this.checkedNum);
             })
           },
-          // 更新购物车数量和购物车单选状态
+          // 更新购物车某个产品数量和购物车单选状态
+          supdateCart(item){
+            let selected=item.productSelected;
+            //console.log('原来购物车某个产品单选状态'+selected);
+            //selected?false:true;//这个表达式不生效
+            selected=!item.productSelected;
+            //console.log('更新购物车某个产品单选状态'+selected);
+            //如何赋值给每个产品单选状态
+            item.productSelected=selected;
+            this.checkedNum=this.list.filter(item=>item.productSelected).length;//选中商品件数
+            //console.log('filter返回什么？'+JSON.stringify(this.list.filter(item=>item.productSelected)));//转成JSON格式 看里边的值
+            // if(this.list.filter(item=>item.productSelected).length == this.list.length){//这个方法和every方法效果一样
+            if(this.list.every(item=>item.productSelected)){//是否全选
+              this.allChecked=true;//全选
+              //this.cartTotalPrice=item.quantity*item.productPrice;
+              this.cartTotalPrice=10198.33;//全选后 商品总金额
+            }else{
+              this.allChecked=false;//非全选
+              let newArray=this.list.filter(item=>item.productSelected);
+              //console.log(newArray.length);
+              if(newArray.length!==0){//数组不为空时 有选中商品
+                for(var i=0;i<newArray.length;i++){
+                  this.cartTotalPrice=newArray[i].productTotalPrice;
+                  //console.log(newArray[i].productTotalPrice);
+                }
+                 
+              }else{
+                this.cartTotalPrice=0;//数组为空时 商品总金额为0
+              }
+
+            }
+
+          },
           //updateCart(){
            updateCart(item,type){
-            console.log('更新购物车啦');
+            console.log('更新购物车某个产品数量啦');
+            // let selected=item.productSelected;
+            // selected=!item.productSelected;
+            // if(type=='-'){
+            //    console.log('减购物车某个产品数量');
+            // }else if(type=='+'){
+            //   console.log('增购物车某个产品数量');
+            // }else{
+            //   selected=!item.productSelected;
+            // }
           },
           // 删除购物车商品
           delProduct(item){
@@ -108,7 +149,11 @@
           },
           // 控制全选功能
           toggleAll(){
-            console.log('控制全选功能');
+            console.log('购物车页面cart.vue控制全选功能');
+            let url=this.allChecked?'/carts/unSelectAll':'/carts/selectAll';
+            this.axios.put(url).then((res)=>{
+               this.renderData(res);
+            })
           },
           // 公共赋值
           renderData(res){

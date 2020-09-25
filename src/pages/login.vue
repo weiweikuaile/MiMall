@@ -58,7 +58,9 @@
                     password
                 }).then((res)=>{
                     //this.res=res;//
-                    // console.log(res);
+                    // console.log('lo');
+                    //  console.log(res);
+                    //  console.log('gin');
                     // console.log(res.id);
                     // console.log(res.username);
                     this.$cookie.set('userId',res.id,{expires:'Session'});

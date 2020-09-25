@@ -8,9 +8,10 @@
                 <h2>{{title}}<slot name="tip"></slot></h2>
             </div>
             <div class="username">
-                <a href="javascript:;">用户名Jack</a>
+                <!--死数据占位-->
+                <!-- <a href="javascript:;">用户名Jack</a> -->
                 <!-- login.vue页面解决 无法登录后返回用户输入的用户名和密码bug后恢复下面代码 -->
-                <!-- <a href="javascript:;">{{username}}</a> -->
+                <a href="javascript:;">用户名{{username}}</a>
                 
             </div>    
         </div>
