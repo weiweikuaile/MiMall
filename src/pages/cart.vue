@@ -20,7 +20,7 @@
                 <li class="cart-item" v-for="(item,index) in list" v-bind:key="index">
                   <div class="item-check">
                     <!-- <span class="checkbox" v-bind:class="{'checked':}"></span> -->
-                    <span class="checkbox" v-bind:class="{'checked':item.productSelected}" @click="supdateCart(item)"></span>
+                    <span class="checkbox" v-bind:class="{'checked':item.productSelected}" @click="updateCart(item)"></span>
                   </div>
                   <div class="item-name">
                     <img v-lazy="item.productMainImage" alt="">
@@ -97,22 +97,19 @@
             //console.log(this.checkedNum);
             })
           },
-          // 更新购物车某个产品数量和购物车单选状态
-          supdateCart(item){
-            let selected=item.productSelected;
-            //console.log('原来购物车某个产品单选状态'+selected);
-            //selected?false:true;//这个表达式不生效
-            selected=!item.productSelected;
-            //console.log('更新购物车某个产品单选状态'+selected);
-            //如何赋值给每个产品单选状态
-            item.productSelected=selected;
-            this.checkedNum=this.list.filter(item=>item.productSelected).length;//选中商品件数
-            //console.log('filter返回什么？'+JSON.stringify(this.list.filter(item=>item.productSelected)));//转成JSON格式 看里边的值
+          //this.cartTotalPrice的值逻辑计算
+          ctPrice(list){
             // if(this.list.filter(item=>item.productSelected).length == this.list.length){//这个方法和every方法效果一样
             if(this.list.every(item=>item.productSelected)){//是否全选
               this.allChecked=true;//全选
               //this.cartTotalPrice=item.quantity*item.productPrice;
-              this.cartTotalPrice=10198.33;//全选后 商品总金额
+              //this.cartTotalPrice=10198.33;//全选后 商品总金额
+              this.cartTotalPrice=0;
+              for(var i=0;i<this.list.length;i++){
+                //console.log(this.cartTotalPrice+=this.list[i].productTotalPrice);
+                this.cartTotalPrice+=this.list[i].productTotalPrice;
+                 
+              }
             }else{
               this.allChecked=false;//非全选
               let newArray=this.list.filter(item=>item.productSelected);
@@ -127,37 +124,86 @@
                 this.cartTotalPrice=0;//数组为空时 商品总金额为0
               }
 
-            }
+            }//if(this.list.every
+          },//ctPrice(list)结束
+          //单击单选框:更新购物车已选择件数checkedNum、商品总金额cartTotalPrice和购物车单选状态决定是否全选
+          /*supdateCart(item){
+            let selected=item.productSelected;
+            //console.log('原来购物车某个产品单选状态'+selected);
+            //selected?false:true;//这个表达式不生效
+            selected=!item.productSelected;
+            //console.log('更新购物车某个产品单选状态'+selected);
+            //如何赋值给每个产品单选状态
+            item.productSelected=selected;
+            this.checkedNum=this.list.filter(item=>item.productSelected).length;//选中商品件数
+            //console.log('filter返回什么？'+JSON.stringify(this.list.filter(item=>item.productSelected)));//转成JSON格式 看里边的值
+            this.ctPrice(this.list);
 
-          },
-          //updateCart(){
+          },*/
+          //单击单选框:更新购物车已选择件数checkedNum、商品总金额cartTotalPrice和购物车单选状态决定是否全选   
+          //点击+ - 是更新购物车某个产品数量+ -
+          //supdateCart(item)购物车单选状态和updateCart(item,type)更新购物车数量 两个合并
            updateCart(item,type){
-            console.log('更新购物车某个产品数量啦');
-            // let selected=item.productSelected;
-            // selected=!item.productSelected;
-            // if(type=='-'){
-            //    console.log('减购物车某个产品数量');
-            // }else if(type=='+'){
-            //   console.log('增购物车某个产品数量');
-            // }else{
-            //   selected=!item.productSelected;
-            // }
+              //let selected=item.productSelected;//可移到else里
+            if(type=='-'){
+              //console.log('-减购物车某个产品数量');
+              if(item.quantity==1){
+                alert('商品至少保留一件!');//后边用ElementUI组件替代
+                return;
+              }
+              --item.quantity;
+            }else if(type=='+'){
+              //console.log('+增购物车某个产品数量');
+              if(item.quantity>=item.productStock){
+                alert('购买商品数量不能超过库存数量!');
+                return;
+              }
+              ++item.quantity;
+            }else{
+              let selected=item.productSelected;
+            //console.log('原来购物车某个产品单选状态'+selected);
+            //selected?false:true;//这个表达式不生效
+              selected=!item.productSelected;
+            //console.log('更新购物车某个产品单选状态'+selected);
+            //如何赋值给每个产品单选状态
+             item.productSelected=selected;
+             this.checkedNum=this.list.filter(item=>item.productSelected).length;//选中商品件数
+            //console.log('filter返回什么？'+JSON.stringify(this.list.filter(item=>item.productSelected)));//转成JSON格式 看里边的值
+            //this.ctPrice(this.list);
+            }
+            //替代后端接口逻辑代码
+            item.productTotalPrice=item.quantity*item.productPrice;//小计  
+            this.ctPrice(this.list);
+            /*后端更新购物车接口正常后,应该这么写*/
+            /*  let quantity=item.quantity,
+                    selected=item.productSelected;
+            // this.axios.put(`/carts/${item.productId}`,{
+            //   quantity,
+            //   selected
+            // }).then((res)=>{
+            //   //this.renderData(res);//console.log('点击+ -后的'+res) 
+            // })*/
           },
           // 删除购物车商品
           delProduct(item){
             console.log('删除购物车商品啦');
+             /*后端删除购物车商品接口正常后,应该这么写*/
+            /*this.axios.delete(`/carts/${item.productId}`).then((res)=>{
+               this.renderData(res);
+            })*/
           },
           // 控制全选功能
           toggleAll(){
             console.log('购物车页面cart.vue控制全选功能');
             let url=this.allChecked?'/carts/unSelectAll':'/carts/selectAll';
+            //更新购物车某个产品数量PUT /carts/{productId}
             this.axios.put(url).then((res)=>{
                this.renderData(res);
             })
           },
           // 公共赋值
           renderData(res){
-            this.list=res.cartProductVoList || [];
+            this.list=res.cartProductVoList || [];//console.log(this.list)//数组
             this.allChecked=res.selectedAll;//是否全选
             this.cartTotalPrice=res.cartTotalPrice;//商品总金额
               //this.checkedNum=res.cartTotalQuantity;//选中商品数量

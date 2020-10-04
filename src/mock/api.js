@@ -41,7 +41,7 @@ Mock.mock('/api/carts',{
             "productPrice": 7199.22,
             "productStatus": 1,
             "productTotalPrice": 7199.22,
-            "productStock": 86,
+            "productStock": 6,
             "productSelected": true,
         },
         {
@@ -55,7 +55,7 @@ Mock.mock('/api/carts',{
             "productPrice": 2999.11,
             "productStatus": 1,
             "productTotalPrice": 2999.11,
-            "productStock": 86,
+            "productStock": 8,
             "productSelected": false,
         }
     ],
