@@ -151,3 +151,73 @@ Mock.mock('/api/carts/products/sum',{
 this.allChecked=res.selectedAll;//是否全选
 this.cartTotalPrice=res.cartTotalPrice;//商品总金额
 this.checkedNum=res.cartTotalQuantity;//选中商品数量*/
+//门户_购物车接口4.移除购物车某个产品DELETE /carts/{productId}
+//根据不同的id值获取对应的数据,接口是/正则表达式/,模拟delete请求,外层Mock只负责拦截接口和方法的定义
+Mock.mock(/\/api\/carts\/(\d+)/,'delete',function(option){
+  //console.log(option)
+  //let id=/\/api\/carts\/(\d+)/.exec(option.url)//通过正则表达式提取到url后面的id
+  //console.log(id)
+  //模拟假数据需要重新写Mock
+  return Mock.mock({
+    "status": 0,
+    "data": {
+      "cartProductVoList": [
+          {
+              "id": 1,
+              "userId": 13,
+              "productId": 1,
+              "quantity": 1,
+              "productName": "iphone7",
+              "productSubtitle": "双十一促销",
+              "productMainImage": "/imgs/item-box-3.jpg",
+              "productPrice": 7199.22,
+              "productStatus": 1,
+              "productTotalPrice": 7199.22,
+              "productStock": 6,
+              "productSelected": true,
+          },
+          {
+              "id": 2,
+              "userId": 13,
+              "productId": 2,
+              "quantity": 1,
+              "productName": "oppo R8",
+              "productSubtitle": "oppo促销进行中",
+              "productMainImage": "/imgs/item-box-2.png",
+              "productPrice": 2999.11,
+              "productStatus": 1,
+              "productTotalPrice": 2999.11,
+              "productStock": 8,
+              "productSelected": false,
+          }
+      ],
+      "selectedAll": false,
+      "cartTotalPrice": 7199.22,
+      "cartTotalQuantity":2
+    }
+  })
+
+});
+/*Mock.mock(/\/api\/carts\/(\d+)/,'delete',{
+    "status": 0,
+    "data": {
+      "cartProductVoList": [
+          {
+              "id": 2,
+              "userId": 13,
+              "productId": 2,
+              "quantity": 1,
+              "productName": "oppo R8",
+              "productSubtitle": "oppo促销进行中",
+              "productMainImage": "/imgs/item-box-2.png",
+              "productPrice": 2999.11,
+              "productStatus": 1,
+              "productTotalPrice": 2999.11,
+              "productStock": 8,
+              "productSelected": true,
+          }
+      ],
+      "selectedAll": true,
+      "cartTotalPrice": 2999.11
+    }
+});*/
