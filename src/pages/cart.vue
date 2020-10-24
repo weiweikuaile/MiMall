@@ -234,7 +234,15 @@
           },
           // 购物车下单
           order(){
-            console.log('页面跳转到订单页面/order/confirm');
+            //console.log('页面跳转到订单页面/order/confirm');
+            //用 for/map/filter都可以
+            let isCheck=this.list.every(item=>!item.productSelected);//是都没选中 返回布尔值
+            //console.log(isCheck);
+           if(isCheck){
+              alert('请选择一件商品');
+            }else{
+              this.$router.push('/order/confirm');
+            }
           }  
           
         }
