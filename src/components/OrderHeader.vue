@@ -36,7 +36,7 @@
 .order-header{
     padding:30px 0;
     //height:112px;
-    //border:1px solid #666666;
+    border-bottom:2px solid #FF6600;
     .container{
         //公共logo在base.scss里
         //单独私有的在本页面加
@@ -49,19 +49,18 @@
             line-height:55px; 
         }
         .title{ 
-            float:left;
-            font-size:28px;
-            color:#333333;  
+            float:left; 
             margin-left:54px;
             h2{
+                font-size:28px;
+                color:#333333;
                 span{
                     margin-left:17px;
                     font-size:14px;
                     color:#999999;
-                    font-weight:bold;
+                    font-weight:200;
                 }
             }
- 
         }
         .username{
             float:right;  
