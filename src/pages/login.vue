@@ -38,6 +38,7 @@
 </template>
 <script>
     import {mapActions} from 'vuex';//[mapActions辅助函数用法]
+    //import { Message } from 'element-ui';//使用this.$message.代替Message.时在main.js里只引入一次即可,其他页面不用引入了
     export default{
         name:'login',
         data(){
@@ -84,11 +85,12 @@
                 
                 //调接口
                 this.axios.post('/user/register',{
-                    username:'weiwork0001',
-                    password:'weiwork0001',
-                    email:'weiwork0001@163.com'
+                    username:'weiwork58',
+                    password:'weiwork58',
+                    email:'weiwork58@163.com'
                 }).then((res)=>{
-                    alert('注册成功');
+                    //Message.success('注册成功');
+                    this.$message.success('注册成功');
                 })
             }//register
         }//methods

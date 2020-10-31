@@ -61,6 +61,7 @@
     import OrderHeader from './../components/OrderHeader';
     import ServiceBar from './../components/ServiceBar';
     import NavFooter from './../components/NavFooter';
+    //import { Message } from 'element-ui';//使用this.$message.代替Message.时在main.js里只引入一次即可,其他页面不用引入了
     export default{
         name:'cart',
         components:{
@@ -148,14 +149,18 @@
             if(type=='-'){
               //console.log('-减购物车某个产品数量');
               if(item.quantity==1){
-                alert('商品至少保留一件!');//后边用ElementUI组件替代
+                //alert('商品至少保留一件!');//后边用ElementUI组件替代
+                //Message.warning('商品至少保留一件!');
+                this.$message.warning('商品至少保留一件!');
                 return;
               }
               --item.quantity;
             }else if(type=='+'){
               //console.log('+增购物车某个产品数量');
               if(item.quantity>=item.productStock){
-                alert('购买商品数量不能超过库存数量!');
+                //alert('购买商品数量不能超过库存数量!');//后边用ElementUI组件替代
+                //Message.warning('购买商品数量不能超过库存数量!');
+                this.$message.warning('购买商品数量不能超过库存数量!');
                 return;
               }
               ++item.quantity;
@@ -208,6 +213,8 @@
               }
               console.log('删除后arr剩下啥↓');
               console.log(arr);
+              //Message.success('删除成功')
+              this.$message.success('删除成功')
               this.list=arr;
             })
              /*后端删除购物车商品接口正常后,应该这么写*/
@@ -239,7 +246,9 @@
             let isCheck=this.list.every(item=>!item.productSelected);//是都没选中 返回布尔值
             //console.log(isCheck);
            if(isCheck){
-              alert('请选择一件商品');
+              //alert('请选择一件商品');
+              //Message.warning('请选择一件商品');
+              this.$message.warning('请选择一件商品');
             }else{
               this.$router.push('/order/confirm');
             }

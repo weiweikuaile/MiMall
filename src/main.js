@@ -4,6 +4,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueLazyLoad from 'vue-lazyload'
 import VueCookie from 'vue-cookie'
+import { Message } from 'element-ui'
 import store from './store'
 import App from './App.vue'
 // import VueAwesomeSwiper from 'vue-awesome-swiper';
@@ -32,12 +33,14 @@ axios.interceptors.response.use(function(response){
   if(res.status==0){
     return res.data;
   }else if(res.status==10){
-    // if(path!='#/index'){
-    //   window.location.href='/#/login';//后续会将涉及到用户个人信息等的页面做拦截，  
-    // }
-    //return Promise.reject(res);//如果有错误就是失败抛出异常 status非0的都要失败 detail.vue里测试 
+    if(path!='#/index'){
+      window.location.href='/#/login';//后续会将涉及到用户个人信息等的页面做拦截，  
+    }
+    return Promise.reject(res);//如果有错误就是失败抛出异常 status非0的都要失败 detail.vue里测试 
   }else{
-    alert(res.msg);//ElementUI的主键方式message弹窗错误消息
+    //alert(res.msg);//ElementUI的主键方式message弹窗错误消息
+    Message.warning(res.msg);
+    //this.$message.warning(res.msg);//异常报错不要使用this.$message.代替Message.
     return Promise.reject(res);
   }
 });
@@ -46,6 +49,7 @@ Vue.use(VueCookie);
 Vue.use(VueLazyLoad,{
   loading:'/imgs/loading-svg/loading-bars.svg'
 })
+Vue.prototype.$message=Message;//扩展一个对象,把Message绑定上去(即利用对象扩展)
 Vue.config.productionTip = false
 
 new Vue({
