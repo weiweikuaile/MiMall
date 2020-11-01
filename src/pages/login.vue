@@ -85,9 +85,9 @@
                 
                 //调接口
                 this.axios.post('/user/register',{
-                    username:'weiwork58',
-                    password:'weiwork58',
-                    email:'weiwork58@163.com'
+                    username:'weiwork858',
+                    password:'weiwork858',
+                    email:'weiwork858@163.com'
                 }).then((res)=>{
                     //Message.success('注册成功');
                     this.$message.success('注册成功');
