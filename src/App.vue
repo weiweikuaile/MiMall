@@ -18,8 +18,10 @@ export default {
     }
   },
   mounted(){
-    this.getUser();
-    this.getCartCount();
+    if(this.$cookie.get('userId')){
+      this.getUser();
+      this.getCartCount();
+    }
   },
   methods:{
 //拉取用户信息
@@ -31,6 +33,7 @@ export default {
     },
 //获取购物车商品数量
     getCartCount(){
+      //console.log('我是App.vue里的getCartCount()');
       this.axios.get('/carts/products/sum').then((res=0)=>{
         //to-do 保存到vuex里面
         this.$store.dispatch('saveCartCount',res);

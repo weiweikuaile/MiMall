@@ -198,26 +198,12 @@ Mock.mock(/\/api\/carts\/(\d+)/,'delete',function(option){
   })
 
 });
-/*Mock.mock(/\/api\/carts\/(\d+)/,'delete',{
-    "status": 0,
-    "data": {
-      "cartProductVoList": [
-          {
-              "id": 2,
-              "userId": 13,
-              "productId": 2,
-              "quantity": 1,
-              "productName": "oppo R8",
-              "productSubtitle": "oppo促销进行中",
-              "productMainImage": "/imgs/item-box-2.png",
-              "productPrice": 2999.11,
-              "productStatus": 1,
-              "productTotalPrice": 2999.11,
-              "productStock": 8,
-              "productSelected": true,
-          }
-      ],
-      "selectedAll": true,
-      "cartTotalPrice": 2999.11
-    }
-});*/
+//门户_用户接口11.退出登录POST /user/logout
+//模拟post请求,外层的Mock只负责拦截接口和方法的定义
+Mock.mock('/api/user/logout','post',function(option){
+	//模拟假数据需要重新写Mock  
+  return Mock.mock({
+        "status": 0,
+        "msg": "退出成功"
+    })
+});

@@ -64,20 +64,27 @@
                     //  console.log('gin');
                     // console.log(res.id);
                     // console.log(res.username);
+                    //与JSESSIONID保持同步,改成会话级别,后台会话id是会话级别,即浏览器关闭,会话自动关闭,下次重新登录
                     this.$cookie.set('userId',res.id,{expires:'Session'});
-		    //this.$cookie.set('userId',res.id,{expires:'1M'});//生效 1M代表1个月
+		            //this.$cookie.set('userId',res.id,{expires:'1M'});//生效 1M代表1个月
                     // this.$cookie.set('username',res.username,{expires:'1M'});
                     // this.$cookie.set('password',res.password,{expires:'1M'});
                     //to-do保存用户名
                     this.$store.dispatch('saveUserName',res.username);//换成下一行代码[mapActions辅助函数用法]
                     //this.saveUserName(res.username);//[mapActions辅助函数用法]
                     //this.$router.push('/index');//跳转到首页
-		    this.$router.push({
-		    	name:'index',
-			params:{
-			  from:'login'
-			}
-		    });
+                    this.$router.push({
+                        name:'index',
+                        params:{
+                            from:'login'
+                        }
+                    });
+                    // this.$router.push({
+                    //     path:'/index',
+                    //     query:{
+                    //       from:'login'
+                    //     }
+                    // });
                 })
             },//login
             //...mapActions(['saveUserName']),//[mapActions辅助函数用法]
