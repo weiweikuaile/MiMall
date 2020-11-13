@@ -56,7 +56,7 @@ Mock.mock('/api/carts',{
             "productStatus": 1,
             "productTotalPrice": 2999.11,
             "productStock": 8,
-            "productSelected": false,
+            "productSelected": true,
         }
     ],
     "selectedAll": false,
@@ -206,4 +206,76 @@ Mock.mock('/api/user/logout','post',function(option){
         "status": 0,
         "msg": "退出成功"
     })
+});
+//门户_收货地址接口5.地址列表GET /shippings
+//模拟get请求,外层的Mock只负责拦截接口和方法的定义
+Mock.mock('/api/shippings','get',function(option){
+  //模拟假数据需要重新写Mock
+  return Mock.mock({
+    "status": 0,
+    "data": {
+        "pageNum": 1,
+        "pageSize": 10,
+        "size": 2,
+        "orderBy": null,
+        "startRow": 1,
+        "endRow": 2,
+        "total": 2,
+        "pages": 1,
+        "list": [
+            {
+                "id": 4,
+                "userId": 13,
+                "receiverName": "geely",
+                "receiverPhone": "010",
+                "receiverMobile": "18688888888",
+                "receiverProvince": "北京",
+                "receiverCity": "北京市",
+                "receiverDistrict": "海淀区",
+                "receiverAddress": "中关村",
+                "receiverZip": "100000",
+                "createTime": 1485066385000,
+                "updateTime": 1485066385000
+            },
+            {
+                "id": 5,
+                "userId": 13,
+                "receiverName": "AAA",
+                "receiverPhone": "010",
+                "receiverMobile": "18688888888",
+                "receiverProvince": "北京",
+                "receiverCity": "北京市",
+                "receiverDistrict": "海淀区",
+                "receiverAddress": "中关村",
+                "receiverZip": "100000",
+                "createTime": 1485066392000,
+                "updateTime": 1485075875000
+            }
+        ],
+        "firstPage": 1,
+        "prePage": 0,
+        "nextPage": 0,
+        "lastPage": 1,
+        "isFirstPage": true,
+        "isLastPage": true,
+        "hasPreviousPage": false,
+        "hasNextPage": false,
+        "navigatePages": 8,
+        "navigatepageNums": [
+            1
+        ]
+    }
+  })
+});
+//门户_收货地址接口1.添加地址POST /shippings
+//模拟post请求,外层的Mock只负责拦截接口和方法的定义
+Mock.mock('/api/shippings','post',function(option){
+  //模拟假数据需要重新写Mock
+  return Mock.mock({
+    "status": 0,
+    "msg": "新建地址成功",
+    "data": {
+        "shippingId": 28
+    }
+  })
 });
