@@ -35,7 +35,7 @@
                 <div class="phone">{{item.receiverMobile}}</div>
                 <div class="street">{{item.receiverProvince +' '+ item.receiverCity +' '+ item.receiverDistrict +' '+ item.receiverAddress}}<br>东大街地铁</div>
                 <div class="action">
-                  <a href="javascript:;" class="fl">
+                  <a href="javascript:;" class="fl" @click="delAddress(item)">
                     <svg class="icon icon-del"><use xlink:href="#icon-del"></use></svg>
                   </a>
                   <a href="javascript:;" class="fr">
@@ -115,11 +115,26 @@
         </div>
       </div>
     </div><!--wrapper-->
+    <!--弹框-->
+    <modal
+      title="删除确认"
+      btnType="1"
+      :showModal="showDelModal"
+      @cancel="showDelModal=false"
+      @submit="submitAddress"
+    >
+      <template v-slot:body>
+        <p>您确认要删除此地址吗？</p>
+        <!-- <div class="edit-wrap">
 
+        </div> -->
+      </template> 
+    </modal>
   </div>
 </template> 
 <script>
     import OrderHeader from './../components/OrderHeader';
+    import Modal from './../components/Modal';
     export default{
         name:'order-confirm',
         data(){
@@ -128,10 +143,14 @@
             cartList:[],//购物车中需要结算的商品列表
             cartTotalPrice:0,//商品总金额
             count:0,//商品结算数量
+            checkedItem:{},//选中的商品对象
+            userAction:'',//用户行为 0新增 1编辑 2删除
+            showDelModal:false,//是否显示删除弹框
           }
         },
         components:{
           OrderHeader,
+          Modal
         },
         mounted(){
             this.getAddressList();
@@ -144,6 +163,64 @@
                 //console.log('地址');
                 //console.log(this.list);
             })
+          },
+          //删除收货地址
+          delAddress(item){console.log('你要删除我!小样的！');
+            this.checkedItem=item;
+            this.userAction=2;//用户行为 0新增 1编辑 2删除
+            this.showDelModal=true;//显示删除弹框
+          },
+          //地址删除、编辑、新增功能
+          submitAddress(){
+            //当前选中的哪一项 this结构语法
+            let {checkedItem,userAction}=this;
+            let method,url;//方法和提交地址
+            //判断 //用户行为 0新增 1编辑 2删除
+            if(userAction==0){
+              method='post',url='/shippings';
+            }else if(userAction==1){
+              method='put',url=`/shippings/${checkedItem.id}`; 
+            }else{
+              method='delete',url=`/shippings/${checkedItem.id}`;  
+            }
+            //动态请求 中括号的方式获取key值
+            this.axios[method](url).then((res)=>{
+              //成功进入这里,第一步关闭弹框 同时数据清理掉,调用通用方法closeModal()
+              this.closeModal();
+              if(method='delete'){
+                var id=checkedItem.id;//删除商品id
+                var arr=res.list;//返回数据data里的数组
+                for(var i in arr){
+                  if(arr[i].id==id){//在数组arr里找到这个id
+                    arr.splice(i,1);//把这个id对应的对象从数组里删除
+                  }
+                }//for
+                this.list=arr;//删除后的结果给 收货地址列表
+              } 
+              //message组件的提示 点击确定显示操作成功
+              this.$message.success('操作成功');
+            });
+
+            /************************************
+             *后端删除收货地址接口正常后,应该这么写*
+             ************************************/
+            /*****
+            //动态请求 中括号的方式获取key值
+            this.axios[method](url).then(()=>{
+            //成功进入这里,第一步关闭弹框 同时数据清理掉,调用通用方法closeModal()
+            this.closeModal();
+            //重新拉取一次收货地址列表 防止俩个人同时登录一个账号删除不同收货地址,要每次删除都要重新拉取一次.
+            this.getAddressList();
+            //message组件的提示 点击确定显示操作成功
+            this.$message.success('操作成功');
+            });
+            ******/
+ 
+          },
+          closeModal(){//关闭弹框 通用方法closeModal()
+            this.checkedItem={};//还原为空
+            this.userAction='';//用户行为 0新增 1编辑 2删除 啥都没有空字符串''
+            this.showDelModal=false;//不显示删除弹框 
           },
           getCartList(){
             this.axios.get('/carts').then((res)=>{

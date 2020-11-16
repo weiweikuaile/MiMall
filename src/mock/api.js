@@ -59,8 +59,8 @@ Mock.mock('/api/carts',{
             "productSelected": true,
         }
     ],
-    "selectedAll": false,
-    "cartTotalPrice": 7199.22,
+    "selectedAll": true,
+    "cartTotalPrice": 10198.33,
     "cartTotalQuantity":2
   }
 });
@@ -279,3 +279,56 @@ Mock.mock('/api/shippings','post',function(option){
     }
   })
 });
+//门户_收货地址接口 2.删除地址DELETE /shippings/{shippingId} DELETE /shippings/28
+//根据不同的id值获取对应的数据,接口是/正则表达式/,模拟delete请求,外层Mock只负责拦截接口和方法的定义
+Mock.mock(/\/api\/shippings\/(\d+)/,'delete',function(option){
+  //console.log(option)
+  //let id=/\/api\/shippings\/(\d+)/.exec(option.url)//通过正则表达式提取到url后面的id
+  //console.log(id)
+  //模拟假数据需要重新写Mock
+  return Mock.mock({
+    "status": 0,
+    "data":  {
+      "pageNum": 1,
+      "pageSize": 10,
+      "size": 2,
+      "orderBy": null,
+      "startRow": 1,
+      "endRow": 2,
+      "total": 2,
+      "pages": 1,
+      "list": [
+          {
+              "id": 4,
+              "userId": 13,
+              "receiverName": "geely",
+              "receiverPhone": "010",
+              "receiverMobile": "18688888888",
+              "receiverProvince": "北京",
+              "receiverCity": "北京市",
+              "receiverDistrict": "海淀区",
+              "receiverAddress": "中关村",
+              "receiverZip": "100000",
+              "createTime": 1485066385000,
+              "updateTime": 1485066385000
+          }
+      ],
+      "firstPage": 1,
+      "prePage": 0,
+      "nextPage": 0,
+      "lastPage": 1,
+      "isFirstPage": true,
+      "isLastPage": true,
+      "hasPreviousPage": false,
+      "hasNextPage": false,
+      "navigatePages": 8,
+      "navigatepageNums": [
+          1
+      ]
+    }
+  })
+
+});
+//门户_收货地址接口 3.登录状态更新地址PUT /shippings/{shippingId}
+
+//门户_收货地址接口 4.选中查看具体的地址GET /shippings/{shippingId} 比5多了/{shippingId}
