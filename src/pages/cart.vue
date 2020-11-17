@@ -194,29 +194,31 @@
             console.log('删除购物车商品啦');
             this.axios.delete(`/carts/${item.productId}`).then((res)=>{
               //this.renderData(res);
-              console.log('打印删除商品productId：'+item.productId);
-              var id=item.productId;
-              console.log('打印删除商品所有信息如下：');
-              console.log(item);
-              console.log('返回数据data成功如下：');
-              console.log(res);//返回数据data成功
-              console.log('返回数据data里的数组如下：');
-              console.log(res.cartProductVoList);//返回数据data里的数组
+              // console.log('打印删除商品所有信息如下：');//
+              // console.log(item);//
+              //console.log('打印删除商品productId：'+item.productId);//
+              var id=item.productId;//删除商品productId
+              
+              // console.log('返回数据data成功如下：');//
+              // console.log(res);//返回数据data成功//
+              // console.log('返回数据data里的数组如下：');//
+              // console.log(res.cartProductVoList);//返回数据data里的数组//
               var arr=res.cartProductVoList;
-              var index;
+              
               for(var i in arr){
                 if(arr[i].productId==id){//在数组arr里找到这个id
-                  console.log('删除的下标 '+i);
-                  index=i;
-                  arr.splice(index,1);//把这个id对应的对象从数组里删除
+                  //console.log('删除的下标 '+i);
+                  
+                  arr.splice(i,1);//把这个id对应的对象从数组里删除
                 }
               }
-              console.log('删除后arr剩下啥↓');
-              console.log(arr);
+              //console.log('删除后arr剩下啥↓');//
+              //console.log(arr);
               //Message.success('删除成功')
-              this.$message.success('删除成功')
+              
               this.list=arr;
-            })
+              this.$message.success('删除成功');
+            });
              /*后端删除购物车商品接口正常后,应该这么写*/
             /*this.axios.delete(`/carts/${item.productId}`).then((res)=>{
                this.renderData(res);

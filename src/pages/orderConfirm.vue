@@ -115,7 +115,50 @@
         </div>
       </div>
     </div><!--wrapper-->
-    <!--弹框-->
+    <!--新增确认弹框Start-->
+    <modal
+      title="新增确认"
+      btnType="1"
+      :showModal="showEditModal"
+      @cancel="showEditModal=false"
+      @submit="submitAddress"
+    >
+      <template v-slot:body>
+        <div class="edit-wrap">
+          <div class="item">
+            <input type="text" class="input" placeholder="姓名">
+            <input type="text" class="input" placeholder="手机号">
+          </div>
+          <div class="item">
+            <select name="province">
+              <option value="北京">北京</option>
+              <option value="天津">天津</option>
+              <option value="河北">河北</option>
+            </select>
+            <select name="city">
+              <option value="北京">北京</option>
+              <option value="天津">天津</option>
+              <option value="河北">石家庄</option>
+            </select>
+            <select name="district">
+              <option value="北京">昌平区</option>
+              <option value="天津">海淀区</option>
+              <option value="河北">东城区</option>
+              <option value="北京">西城区</option>
+              <option value="天津">顺义区</option>
+              <option value="河北">房山区</option>
+            </select>
+          </div>
+          <div class="item">
+            <textarea name="street"></textarea>
+          </div>
+          <div class="item">
+             <input type="text" class="input" placeholder="邮编">
+          </div>
+        </div>
+      </template> 
+    </modal>
+    <!--删除确认弹框Start-->
     <modal
       title="删除确认"
       btnType="1"
@@ -125,9 +168,7 @@
     >
       <template v-slot:body>
         <p>您确认要删除此地址吗？</p>
-        <!-- <div class="edit-wrap">
-
-        </div> -->
+        
       </template> 
     </modal>
   </div>
@@ -146,6 +187,7 @@
             checkedItem:{},//选中的商品对象
             userAction:'',//用户行为 0新增 1编辑 2删除
             showDelModal:false,//是否显示删除弹框
+            showEditModal:true,//是否显示新增或编辑弹框
           }
         },
         components:{
@@ -216,7 +258,7 @@
             });
             ******/
  
-          },
+          },//submitAddress
           closeModal(){//关闭弹框 通用方法closeModal()
             this.checkedItem={};//还原为空
             this.userAction='';//用户行为 0新增 1编辑 2删除 啥都没有空字符串''
@@ -386,8 +428,37 @@
           margin-top: 37px;
           text-align: right;
         }
-      }//order-box
+      }//order-box 
     }//wrapper
-    //.
+    .edit-wrap{
+        font-size:14px;
+        .item{
+          margin-bottom:15px;
+          .input{
+            display: inline-block;
+            width: 283px;
+            height: 40px;
+            line-height: 40px;
+            padding-left: 15px;
+            border: 1px solid #E5E5E5;
+            &+.input{
+              margin-left: 14px;
+            }
+          }
+          select{
+            height: 40px;
+            line-height: 40px;
+            border: 1px solid #E5E5E5;
+            margin-right: 15px;
+          }
+          textarea{
+            height: 62px;
+            width: 100%;
+            padding: 13px 15px;
+            box-sizing: border-box;
+            border: 1px solid #E5E5E5;
+          }
+        }//item
+    }//edit-wrap
   }//order-confirm
 </style>    
