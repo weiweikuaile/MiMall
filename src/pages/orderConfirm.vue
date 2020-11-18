@@ -56,8 +56,7 @@
                   </a>
                 </div>
               </div> -->
-              <!-- <div class="addr-add" @click="openAddressModal"> -->
-              <div class="addr-add">
+              <div class="addr-add" @click="openAddressModal">
                 <div class="icon-add"></div>
                 <div>添加新地址</div>
               </div>
@@ -126,21 +125,21 @@
       <template v-slot:body>
         <div class="edit-wrap">
           <div class="item">
-            <input type="text" class="input" placeholder="姓名">
-            <input type="text" class="input" placeholder="手机号">
+            <input type="text" class="input" placeholder="姓名" v-model="checkedItem.receiverName">
+            <input type="text" class="input" placeholder="手机号" v-model="checkedItem.receiverMobile">
           </div>
           <div class="item">
-            <select name="province">
+            <select name="province" v-model="checkedItem.receiverProvince">
               <option value="北京">北京</option>
               <option value="天津">天津</option>
               <option value="河北">河北</option>
             </select>
-            <select name="city">
+            <select name="city" v-model="checkedItem.receiverCity">
               <option value="北京">北京</option>
               <option value="天津">天津</option>
               <option value="河北">石家庄</option>
             </select>
-            <select name="district">
+            <select name="district" v-model="checkedItem.receiverDistrict">
               <option value="北京">昌平区</option>
               <option value="天津">海淀区</option>
               <option value="河北">东城区</option>
@@ -150,10 +149,10 @@
             </select>
           </div>
           <div class="item">
-            <textarea name="street"></textarea>
+            <textarea name="street" v-model="checkedItem.receiverAddress"></textarea>
           </div>
           <div class="item">
-             <input type="text" class="input" placeholder="邮编">
+             <input type="text" class="input" placeholder="邮编" v-model="checkedItem.receiverZip">
           </div>
         </div>
       </template> 
@@ -187,7 +186,7 @@
             checkedItem:{},//选中的商品对象
             userAction:'',//用户行为 0新增 1编辑 2删除
             showDelModal:false,//是否显示删除弹框
-            showEditModal:true,//是否显示新增或编辑弹框
+            showEditModal:false,//是否显示新增或编辑弹框
           }
         },
         components:{
@@ -206,6 +205,12 @@
                 //console.log(this.list);
             })
           },
+          //打开新增地址弹框
+          openAddressModal(){
+            this.checkedItem={};//为空
+            this.userAction=0;//用户行为 0新增 1编辑 2删除
+            this.showEditModal=true;//显示新增弹框
+          },
           //删除收货地址
           delAddress(item){console.log('你要删除我!小样的！');
             this.checkedItem=item;
@@ -216,7 +221,7 @@
           submitAddress(){
             //当前选中的哪一项 this结构语法
             let {checkedItem,userAction}=this;
-            let method,url;//方法和提交地址
+            let method,url,params={};//方法和提交地址 参数params默认是一个对象
             //判断 //用户行为 0新增 1编辑 2删除
             if(userAction==0){
               method='post',url='/shippings';
@@ -225,11 +230,41 @@
             }else{
               method='delete',url=`/shippings/${checkedItem.id}`;  
             }
+            if(userAction==0 || userAction==1){
+              let {receiverName,receiverMobile,receiverProvince,receiverCity,receiverDistrict,receiverAddress,receiverZip}=checkedItem;
+              let errMsg='';
+              if(!receiverName){
+                errMsg='请输入收货人名称';
+              }else if(!receiverMobile || !/\d{11}/.test(receiverMobile)){
+                errMsg = '请输入正确格式的手机号';
+              }else if(!receiverProvince){
+                errMsg = '请选择省份';
+              }else if(!receiverCity){
+                errMsg = '请选择对应的城市';
+              }else if(!receiverDistrict || !receiverAddress){
+                errMsg = '请输入收货地址';
+              }else if(!receiverZip || !/\d{6}/.test(receiverZip)){
+                errMsg = '请输入六位邮编';
+              }
+              if(errMsg){
+                this.$message.error(errMsg);
+                return;
+              }
+              params={
+                receiverName,
+                receiverMobile,
+                receiverProvince,
+                receiverCity,
+                receiverDistrict,
+                receiverAddress,
+                receiverZip
+              };
+            }
             //动态请求 中括号的方式获取key值
-            this.axios[method](url).then((res)=>{
+            this.axios[method](url,params).then((res)=>{
               //成功进入这里,第一步关闭弹框 同时数据清理掉,调用通用方法closeModal()
               this.closeModal();
-              if(method='delete'){
+              if(method=='delete'){
                 var id=checkedItem.id;//删除商品id
                 var arr=res.list;//返回数据data里的数组
                 for(var i in arr){
@@ -238,6 +273,10 @@
                   }
                 }//for
                 this.list=arr;//删除后的结果给 收货地址列表
+              }else if(method=='post' || method=='put'){
+                console.log('是新增还是编辑？');
+                //重新拉取一次收货地址列表 防止俩个人同时登录一个账号删除不同收货地址,要每次删除都要重新拉取一次.
+                this.getAddressList();
               } 
               //message组件的提示 点击确定显示操作成功
               this.$message.success('操作成功');
@@ -263,6 +302,7 @@
             this.checkedItem={};//还原为空
             this.userAction='';//用户行为 0新增 1编辑 2删除 啥都没有空字符串''
             this.showDelModal=false;//不显示删除弹框 
+            this.showEditModal=false;//不显示新增弹框
           },
           getCartList(){
             this.axios.get('/carts').then((res)=>{
