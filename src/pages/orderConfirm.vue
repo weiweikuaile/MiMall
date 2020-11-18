@@ -30,7 +30,7 @@
           <div class="item-address">
             <h2 class="addr-title">收货地址</h2>
             <div class="addr-list clearfix">
-              <div class="addr-info" v-for="(item,index) in list" :key="index">
+              <div class="addr-info" :class="{'checked':index == checkIndex}" @click="checkIndex=index" v-for="(item,index) in list" :key="index">
                 <h2>{{item.receiverName}}</h2>
                 <div class="phone">{{item.receiverMobile}}</div>
                 <div class="street">{{item.receiverProvince +' '+ item.receiverCity +' '+ item.receiverDistrict +' '+ item.receiverAddress}}<br>东大街地铁</div>
@@ -38,7 +38,7 @@
                   <a href="javascript:;" class="fl" @click="delAddress(item)">
                     <svg class="icon icon-del"><use xlink:href="#icon-del"></use></svg>
                   </a>
-                  <a href="javascript:;" class="fr">
+                  <a href="javascript:;" class="fr" @click="editAddressModal(item)">
                     <svg class="icon icon-edit"><use xlink:href="#icon-edit"></use></svg>
                   </a>
                 </div>
@@ -108,8 +108,7 @@
           </div>
           <div class="btn-group">
             <a href="/#/cart" class="btn btn-default btn-large">返回购物车</a>
-            <!-- <a href="javascript:;" class="btn btn-large" @click="orderSubmit">去结算</a> -->
-            <a href="javascript:;" class="btn btn-large">去结算</a>
+            <a href="javascript:;" class="btn btn-large" @click="orderSubmit">去结算</a>
           </div>
         </div>
       </div>
@@ -187,6 +186,7 @@
             userAction:'',//用户行为 0新增 1编辑 2删除
             showDelModal:false,//是否显示删除弹框
             showEditModal:false,//是否显示新增或编辑弹框
+            checkIndex:0,//当前收货地址选中索引 默认选中0
           }
         },
         components:{
@@ -209,6 +209,12 @@
           openAddressModal(){
             this.checkedItem={};//为空
             this.userAction=0;//用户行为 0新增 1编辑 2删除
+            this.showEditModal=true;//显示新增弹框
+          },
+          //打开编辑地址弹框
+          editAddressModal(item){
+            this.checkedItem=item;//保存当前点击的对象
+            this.userAction=1;//用户行为 0新增 1编辑 2删除
             this.showEditModal=true;//显示新增弹框
           },
           //删除收货地址
@@ -309,13 +315,22 @@
                 let list=res.cartProductVoList;//获取购物车中所有商品数据
                 this.cartTotalPrice=res.cartTotalPrice;//商品总金额
                 this.cartList=list.filter(item=>item.productSelected);
+                
                 this.cartList.map((item)=>{//遍历得出count商品结算数量
                   this.count += item.quantity;
                 })
-                
-
             })
-          }
+          },
+          //订单提交
+          orderSubmit(){//收货地址列表是否根据这个当前选中的索引 取值， 如果取不到说明没有选中收货地址
+            let item=this.list[this.checkIndex];
+            if(!item){
+              this.$message.error('请选择一个收货地址');
+              return;
+            }
+            //提交订单接口
+            
+          }//orderSubmit
         }
     }
 </script>
