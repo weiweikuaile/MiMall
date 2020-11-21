@@ -323,13 +323,27 @@
           },
           //订单提交
           orderSubmit(){//收货地址列表是否根据这个当前选中的索引 取值， 如果取不到说明没有选中收货地址
-            let item=this.list[this.checkIndex];
+            let item=this.list[this.checkIndex];//收货地址单个list
+            // console.log('item是');
+            // console.log(item);
             if(!item){
               this.$message.error('请选择一个收货地址');
               return;
             }
             //提交订单接口
-            
+            this.axios.post('/orders',{
+              shippingId:item.id
+            }).then((res)=>{
+              // console.log('返回当前订单号');
+              // console.log(res);
+              // console.log('接口返回');
+              this.$router.push({
+                path:'/order/pay',
+                query:{
+                  orderNo:res.orderNo
+                }
+              })
+            })
           }//orderSubmit
         }
     }

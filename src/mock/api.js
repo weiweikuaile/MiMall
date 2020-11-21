@@ -369,3 +369,37 @@ Mock.mock(/\/api\/shippings\/(\d+)/,'get',function(option){
   })
 
 });
+//门户_订单接口 1.创建订单POST /orders
+//模拟post请求,外层的Mock只负责拦截接口和方法的定义
+Mock.mock('/api/orders','post',function(option){
+  //模拟假数据需要重新写Mock
+  return Mock.mock({
+    "status": 0, 
+    "data": {
+      "orderNo": 1485158223095,
+      "payment": 2999.11,
+      "paymentType": 1,
+      "postage": 0,
+      "status": 10,
+      "paymentTime": null,
+      "sendTime": null,
+      "endTime": null,
+      "closeTime": null,
+      "createTime": 1485158223095,
+      "orderItemVoList": [
+          {
+              "orderNo": 1485158223095,
+              "productId": 2,
+              "productName": "oppo R8",
+              "productImage": "mainimage.jpg",
+              "currentUnitPrice": 2999.11,
+              "quantity": 1,
+              "totalPrice": 2999.11,
+              "createTime": null
+          }
+      ],
+      "shippingId": 5,
+      "shippingVo": null
+    }
+  })
+});
