@@ -403,3 +403,63 @@ Mock.mock('/api/orders','post',function(option){
     }
   })
 });
+//门户_订单接口 3.订单详情 GET /orders/{orderNo}
+//模拟get请求,外层的Mock只负责拦截接口和方法的定义
+Mock.mock(/\/api\/orders\/(\d+)/,'get',function(option){
+  //console.log(option)
+  //let id=/\/api\/orders\/(\d+)/.exec(option.url)//通过正则表达式提取到url后面的id
+  //console.log(id)
+  //模拟假数据需要重新写Mock
+  return Mock.mock({
+    "status":0,  
+    "data": {
+      "orderNo": 1480515829406,
+      "payment": 30000.00,
+      "paymentType": 1,
+      "paymentTypeDesc": "在线支付",
+      "postage": 0,
+      "status": 10,
+      "statusDesc": "未支付",
+      "paymentTime": "",
+      "sendTime": "",
+      "endTime": "",
+      "closeTime": "",
+      "createTime": "2016-11-30 22:23:49",
+      "orderItemVoList": [
+        {
+          "orderNo": 1480515829406,
+          "productId": 1,
+          "productName": "iphone7",
+          "productImage": "/imgs/item-box-1.png",
+          "currentUnitPrice": 10000.00,
+          "quantity": 1,
+          "totalPrice": 10000.00,
+          "createTime": "2016-11-30 22:23:49"
+        },
+        {
+          "orderNo": 1480515829406,
+          "productId": 2,
+          "productName": "oppo R8",
+          "productImage": "/imgs/item-box-2.png",
+          "currentUnitPrice": 20000.00,
+          "quantity": 1,
+          "totalPrice": 20000.00,
+          "createTime": "2016-11-30 22:23:49"
+        }
+      ],
+      "imageHost": "http://img.happymmall.com/",
+      "shippingId": 3,
+      "receiverName": "geely",
+      "shippingVo": {
+        "receiverName": "geely",
+        "receiverPhone": "0100",
+        "receiverMobile": "186***10585",
+        "receiverProvince": "北京",
+        "receiverCity": "北京市",
+        "receiverDistrict": "昌平区",
+        "receiverAddress": "矩阵小区",
+        "receiverZip": "100000"
+      }
+    }
+  })  
+});
