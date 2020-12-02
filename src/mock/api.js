@@ -466,11 +466,22 @@ Mock.mock(/\/api\/orders\/(\d+)/,'get',function(option){
 //门户_支付接口1.支付 POST /pay
 //模拟post请求,外层的Mock只负责拦截接口和方法的定义
 Mock.mock('/api/pay','post',function(option){
-  //模拟假数据需要重新写Mock
-  return Mock.mock({
-    "status": 0,
-    "data": {
-      "content": "http://"
-    }
-  })
+  //if(payType==2){
+    //模拟假数据需要重新写Mock
+    return Mock.mock({
+      "status": 0,
+      "data": {
+        "content": "weixin://wxpay/bizpayurl?pr=FJVgJty"
+      }
+    })
+  //}else if(payType==1){
+    //模拟假数据需要重新写Mock
+    // return Mock.mock({
+    //   "status": 0,
+    //   "data": {
+    //     "content": "<form id=bestPayForm" name="punchout_form" method="post" action="https://openapi.alipay.com/gateway.do?charset=utf-"></form><script>document.getElementById('bestPayForm').submit();</script>"
+    //   }
+    // })
+  //}
+ 
 });

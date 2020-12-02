@@ -17,7 +17,7 @@ import Loading from './../components/Loading'
     data(){
       return {
         orderId:this.$route.query.orderId,
-        content:'', //支付宝给的网关地址、签名等 
+        content:'', //支付宝给的网关地址、签名等表单字符串 
         loading:true
       }  
     },
@@ -38,7 +38,7 @@ import Loading from './../components/Loading'
         }).then((res)=>{
           this.content=res.content;  
           setTimeout(()=>{
-            document.forms[0].submit();  
+            document.forms[0].submit();//DOM模型获取 document.forms通过触发submit方法提交  
           },100)
         })  
       }  
