@@ -418,7 +418,7 @@ Mock.mock(/\/api\/orders\/(\d+)/,'get',function(option){
       "paymentType": 1,
       "paymentTypeDesc": "在线支付",
       "postage": 0,
-      "status": 10,
+      "status": 20,
       "statusDesc": "未支付",
       "paymentTime": "",
       "sendTime": "",

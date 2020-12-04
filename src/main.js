@@ -43,6 +43,11 @@ axios.interceptors.response.use(function(response){
     //this.$message.warning(res.msg);//异常报错不要使用this.$message.代替Message.
     return Promise.reject(res);
   }
+},(error)=>{
+  let res=error.response;
+  //alert(res);
+  Message.error(res.data.message);
+  return Promise.reject(error);//让它认为是报错,不要跑到orderPay.vue文件的then里
 });
 Vue.use(VueAxios,axios);
 Vue.use(VueCookie);

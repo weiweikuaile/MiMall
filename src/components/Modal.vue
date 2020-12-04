@@ -15,9 +15,9 @@
                 <div class="modal-footer">
                     <a href="javascript:;" class="btn" v-if="btnType==1" v-on:click="$emit('submit')">{{sureText}}</a>
                     <a href="javascript:;" class="btn" v-if="btnType==2" v-on:click="$emit('cancel')">{{cancelText}}</a>
-                    <div class="btn-group" v-if="btnType==3" v-else>
+                    <div class="btn-group" v-if="btnType==3">
                         <a href="javascript:;" v-on:click="$emit('submit')" class="btn">{{sureText}}</a>
-                        <a href="javascript:;" v-on:click="$emit('cancel')" class="btn">{{cancelText}}</a>
+                        <a href="javascript:;" v-on:click="$emit('cancel')" class="btn btn-default">{{cancelText}}</a>
                     </div>                
                 </div>
             </div>
