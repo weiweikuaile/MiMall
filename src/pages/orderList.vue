@@ -1,8 +1,8 @@
 <template>  
     <div class="order-list">
-      <order-header title="订单确认">
+      <order-header title="订单列表">
         <template v-slot:tip>
-          <span>请认真填写收货地址</span>
+          <span>请谨防钓鱼链接或诈骗电话，了解更多></span>
         </template>
       </order-header>  
         
