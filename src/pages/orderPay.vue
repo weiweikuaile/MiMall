@@ -164,7 +164,7 @@ export default{
       this.T=setInterval(()=>{
         //拉取订单的状态 如果用户付款,清掉定时器
         this.axios.get(`/orders/${this.orderId}`).then((res)=>{
-          console.log(res);
+          //console.log(res);
           if(res.status==20){
             clearInterval(this.T);//清掉定时器 否则会一直刷接口
             this.goOrderList();//自动跳转到订单列表页面orderList.vue.
