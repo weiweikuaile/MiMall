@@ -46,6 +46,15 @@
                 </div>
               </div>
             </div><!--order-->
+            <el-pagination
+              class="pagination"
+              background
+              layout="prev, pager, next"
+              :pageSize="pageSize"
+              :total="total"
+              @current-change="handleChange"
+              >
+            </el-pagination>
             <no-data v-if="!loading && list.length==0"></no-data> 
           </div><!--order-box-->
         </div><!--"container"-->
@@ -56,17 +65,22 @@
 import OrderHeader from './../components/OrderHeader';
 import Loading from './../components/Loading';
 import NoData from './../components/NoData';
+import { Pagination } from 'element-ui';
     export default{
         name:'order-list',
         components:{
           OrderHeader,
           Loading,
-          NoData
+          NoData,
+          [Pagination.name]:Pagination
         },
         data(){
           return {
             loading:true,
-            list:[]
+            list:[],
+            pageSize:10,
+            pageNum:1,
+            total:0
           }
         },
         mounted(){
@@ -75,10 +89,17 @@ import NoData from './../components/NoData';
         methods:{
           getOrderList(){//获取订单列表 接口2.订单List GET /orders
             this.axios.get('/orders').then((res)=>{
+          /*接口能用时再用这个params传参,现在mock无法模拟params带参,暂时用原来的不带参数的*/
+          //   this.axios.get('/orders',{
+          //     params:{
+          //       pageNum:this.pageNum
+          //     }
+          //  }).then((res)=>{  
               this.loading=false;
               //console.log(res.list)
-              //this.list=res.list;
-              this.list=[]||res.list;//当没有数据时为空数组 测试NoData组件,测试结束后还原上一行代码
+              this.list=res.list;
+              //this.list=[]||res.list;//当没有数据时为空数组 测试NoData组件,测试结束后还原上一行代码
+              this.total=res.total;
             }).catch(()=>{
               this.loading=false;
             })
@@ -100,7 +121,11 @@ import NoData from './../components/NoData';
                 orderNo
               }
             })
-          }
+          },
+          handleChange(pageNum){
+            this.pageNum=pageNum;
+            this.getOrderList();
+          },
         }
     }
 </script>
@@ -166,7 +191,13 @@ import NoData from './../components/NoData';
             }
           }
         } 
-        
+        .pagination{
+          text-align: right; 
+        }
+        .el-pagination.is-background .el-pager li:not(.disabled).active{
+          background-color: #FF6600;
+          color: #FFF;
+        }
       }
     }  
         

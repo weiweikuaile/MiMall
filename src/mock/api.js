@@ -407,6 +407,7 @@ Mock.mock('/api/orders','post',function(option){
 //模拟get请求,外层的Mock只负责拦截接口和方法的定义
 Mock.mock('/api/orders','get',function(option){
   //console.log(option)
+  let i=options.url
   //模拟假数据需要重新写Mock
   return Mock.mock({
      "status": 0,
@@ -417,7 +418,7 @@ Mock.mock('/api/orders','get',function(option){
           "orderBy": null,
           "startRow": 1,
           "endRow": 3,
-          "total": 16,
+          "total": 48,
           "pages": 6,
           "list": [
         {
