@@ -8,6 +8,7 @@
       <div class="wrapper">
         <div class="container">
           <div class="order-box">
+            <Loading v-if="loading"></Loading>
             <div class="order" v-for="(order,index) in list" :key="index">
               <div class="order-title">
                 <div class="item-info fl">
@@ -45,6 +46,7 @@
                 </div>
               </div>
             </div><!--order-->
+            <no-data v-if="!loading && list.length==0"></no-data> 
           </div><!--order-box-->
         </div><!--"container"-->
       </div><!--wrapper-->   
@@ -52,13 +54,18 @@
 </template> 
 <script>
 import OrderHeader from './../components/OrderHeader';
+import Loading from './../components/Loading';
+import NoData from './../components/NoData';
     export default{
         name:'order-list',
         components:{
-          OrderHeader,  
+          OrderHeader,
+          Loading,
+          NoData
         },
         data(){
           return {
+            loading:true,
             list:[]
           }
         },
@@ -68,8 +75,12 @@ import OrderHeader from './../components/OrderHeader';
         methods:{
           getOrderList(){//获取订单列表 接口2.订单List GET /orders
             this.axios.get('/orders').then((res)=>{
+              this.loading=false;
               //console.log(res.list)
-              this.list=res.list;
+              //this.list=res.list;
+              this.list=[]||res.list;//当没有数据时为空数组 测试NoData组件,测试结束后还原上一行代码
+            }).catch(()=>{
+              this.loading=false;
             })
           },
           goPay(orderNo){//三种路由跳转方式
@@ -103,13 +114,14 @@ import OrderHeader from './../components/OrderHeader';
       padding-bottom:110px;
       .order-box{
         .order{
+          @include border();
           background-color:$colorG;
           margin-bottom:31px;
           &:last-child{
             margin-bottom:0;
           }
           .order-title{
-
+            @include height(74px);
             background-color:$colorK;
             padding:0 43px;
             font-size:16px;
@@ -145,7 +157,7 @@ import OrderHeader from './../components/OrderHeader';
               }
             }
             .good-state{
-
+              @include height(145px);
               font-size:20px;
               color:$colorA;
               a{
