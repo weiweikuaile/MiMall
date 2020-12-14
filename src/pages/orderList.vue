@@ -47,6 +47,7 @@
               </div>
             </div><!--order-->
             <el-pagination
+              v-if="false"
               class="pagination"
               background
               layout="prev, pager, next"
@@ -55,6 +56,9 @@
               @current-change="handleChange"
               >
             </el-pagination>
+            <div class="load-more">
+                <el-button type="primary" :loading="loading" @click="loadMore">加载更多</el-button>
+            </div>  
             <no-data v-if="!loading && list.length==0"></no-data> 
           </div><!--order-box-->
         </div><!--"container"-->
@@ -65,18 +69,19 @@
 import OrderHeader from './../components/OrderHeader';
 import Loading from './../components/Loading';
 import NoData from './../components/NoData';
-import { Pagination } from 'element-ui';
+import { Pagination,Button } from 'element-ui';
     export default{
         name:'order-list',
         components:{
           OrderHeader,
           Loading,
           NoData,
-          [Pagination.name]:Pagination
+          [Pagination.name]:Pagination,
+          [Button.name]:Button
         },
         data(){
           return {
-            loading:true,//数据还未返回来时,显示loading
+            loading:false,//数据还未返回来时,显示loading
             list:[],//订单列表 接口2获取到的数据
             pageSize:10,//每页10条记录
             pageNum:1,//当前页 默认第1页
@@ -88,16 +93,19 @@ import { Pagination } from 'element-ui';
         },
         methods:{
           getOrderList(){//获取订单列表 接口2.订单List GET /orders
+            this.loading=true;//当点击的时候设置为true即 显示loading
             this.axios.get('/orders').then((res)=>{
           /*接口能用时再用这个params传参,现在mock无法模拟params带参,暂时用原来的不带参数的*/
           //   this.axios.get('/orders',{
           //     params:{
+          //       pageSize:10,//每页10条记录
           //       pageNum:this.pageNum
           //     }
           //  }).then((res)=>{  
               this.loading=false;
               //console.log(res.list)
-              this.list=res.list;
+              //this.list=res.list;
+              this.list=this.list.concat(res.list);//把第二页数据追加到第一页数据后边,使用拼接数组
               //this.list=[]||res.list;//当没有数据时为空数组 测试NoData组件,测试结束后还原上一行代码
               this.total=res.total;
             }).catch(()=>{
@@ -126,6 +134,10 @@ import { Pagination } from 'element-ui';
             this.pageNum=pageNum;
             this.getOrderList();
           },
+          loadMore(){
+            this.pageNum++;
+            this.getOrderList();
+          }
         }
     }
 </script>
@@ -197,6 +209,14 @@ import { Pagination } from 'element-ui';
         .el-pagination.is-background .el-pager li:not(.disabled).active{
           background-color: #FF6600;
           // color: #FFF;
+        }
+        .el-button--primary {
+          //color: #FFF;
+          background-color: #FF6600;
+          border-color: #FF6600;
+        }
+        .load-more{
+          text-align:center;
         }
       }
     }  
