@@ -76,11 +76,11 @@ import { Pagination } from 'element-ui';
         },
         data(){
           return {
-            loading:true,
-            list:[],
-            pageSize:10,
-            pageNum:1,
-            total:0
+            loading:true,//数据还未返回来时,显示loading
+            list:[],//订单列表 接口2获取到的数据
+            pageSize:10,//每页10条记录
+            pageNum:1,//当前页 默认第1页
+            total:0//总条目数
           }
         },
         mounted(){
@@ -196,7 +196,7 @@ import { Pagination } from 'element-ui';
         }
         .el-pagination.is-background .el-pager li:not(.disabled).active{
           background-color: #FF6600;
-          color: #FFF;
+          // color: #FFF;
         }
       }
     }  
